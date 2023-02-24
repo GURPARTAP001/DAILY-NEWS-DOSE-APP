@@ -11,7 +11,8 @@ export default class App extends Component {
     return (
       <div>
         <Navbar/>
-        <News/>
+        {/* we don't want to hardcore the page size so we are passing it in the form of the props */}
+        <News pageSize={6}/>
       </div>
     )
   }
