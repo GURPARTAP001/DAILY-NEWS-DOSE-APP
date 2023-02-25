@@ -86,17 +86,17 @@ export class News extends Component {
                         //in this method we have to give the specific distinction to every newsitem for which we will return the distinction inside the arrow function inside the .map
                         return <div className="col-md-4 my-3" key={element.url} >
                             {/* so that each newsitem is of the same size we will use the slice method inside the title and description */}
-                            <Newsitems title={element.title ? element.title.slice(0, 45) : ""} description={element.description ? element.description.slice(0, 88) : ""} imageurl={element.urlToImage ? element.urlToImage : "https://th.bing.com/th/id/OIP.AyFiPMxkptU0wUk9QbHijwHaEK?w=309&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7"} url={element.url} />
+                            <Newsitems title={element.title ? element.title.slice(0, 45) : ""} description={element.description ? element.description.slice(0, 70) : ""} imageurl={element.urlToImage ? element.urlToImage : "https://th.bing.com/th/id/OIP.AyFiPMxkptU0wUk9QbHijwHaEK?w=309&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7"} url={element.url} author={element.author} date={element.publishedAt} source={element.source.name} />
                         </div>
                     })} 
                 </div>
                 {/* here we are adding the next and the previous button so that we can move to the next or the previous page of the website */}
                 <div className="container d-flex justify-content-between" >
                     {/* we are disabling the previous button if the page no. is less then the 1 */}
-                    <button disabled={this.state.page <= 1} type="button" onClick={this.handleprev} className="btn btn-secondary">Previous &larr;</button>
+                    <button disabled={this.state.page <= 1} type="button" onClick={this.handleprev} className="btn btn-dark">Previous &larr;</button>
                     <button type="button"
                         onClick={this.handlenext}
-                        disabled={this.state.page + 1 > Math.ceil(this.state.totalarticle / this.props.pageSize)} className="btn btn-secondary">Next &rarr;</button>
+                        disabled={this.state.page + 1 > Math.ceil(this.state.totalarticle / this.props.pageSize)} className="btn btn-dark">Next &rarr;</button>
 
                 </div>
         
