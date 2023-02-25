@@ -9,7 +9,7 @@ export class Newsitems extends Component {
         return (
             <div>
             {/* here we are using the card to display the various news inside the news components */}
-                <div className="card" style={{width: "18rem"}}>
+                <div className="card">
                     <img src={imageurl} className="card-img-top" alt="..."/>
                         <div className="card-body">
                             <h5 className="card-title">{title}...</h5>

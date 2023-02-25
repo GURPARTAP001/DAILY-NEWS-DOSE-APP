@@ -2,8 +2,20 @@ import React, { Component } from 'react'
 // import PropTypes from 'prop-types'
 import Newsitems from './Newsitems'
 import Loading, { loading } from './Loading'
+import PropTypes from 'prop-types'
 
 export class News extends Component {
+    // these are the default props 
+    static defaultProps={
+        country :'in',
+        pageSize:6,
+        category:'general'
+    }
+    static propTypes={
+        country :PropTypes.string,// here the default value of the prop country is string 
+        pageSize:PropTypes.number,
+        category:PropTypes.string
+    }
 
 
     //in the react the constructor works only if the object of that class is created,so inside the constructor we will always declare the super() to avoid the error 
@@ -21,7 +33,7 @@ export class News extends Component {
 
     //now to update the newsitem on its own we use componentdidmount here we are fetching the data from the news api directly and using it in the componentdidmount  
     async componentDidMount() {
-        let url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=f21e7a9f6a6849679adaef56fc4be6df&page=1&pageSize=${this.props.pageSize}`
+        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=f21e7a9f6a6849679adaef56fc4be6df&page=1&pageSize=${this.props.pageSize}`
         this.setState({ loading: true })//here as the we are fetching the data from the apip so for the moment 
         let data = await fetch(url)
         let parsedata = await data.json()
@@ -34,7 +46,7 @@ export class News extends Component {
     handlenext = async () => {
 
 
-        let url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=f21e7a9f6a6849679adaef56fc4be6df&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`
+        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=f21e7a9f6a6849679adaef56fc4be6df&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`
         this.setState({ loading: true })//here as the we are fetching the data from the apip so for the moment the loading is true
         let data = await fetch(url)
         let parsedata = await data.json()
@@ -48,7 +60,7 @@ export class News extends Component {
 
     handleprev = async () => {
         console.log("previous")
-        let url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=f21e7a9f6a6849679adaef56fc4be6df&page=${this.state.page - 1}&pageSize=${this.props.pageSize}`
+        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=f21e7a9f6a6849679adaef56fc4be6df&page=${this.state.page - 1}&pageSize=${this.props.pageSize}`
         this.setState({loading:true})//here as the we are fetching the data from the apip so for the moment 
         let data = await fetch(url)
         let parsedata = await data.json()
@@ -69,14 +81,14 @@ export class News extends Component {
                 <div className="row">
                     {/* now we want to alterate the newsitems with the different news so we will use the 
                     this.state.map(()=>{}) here the map is the ioorder method it takes the arrow function in it*/}
-                    {/* we also want that when we are loading all the data present on the page should get erased so !this.state.loading as when the data is being fetched the loading=true and at that time we want no data on the page so we will use the && as if the first cond'n is false the next statement (.map) will not get evaluate. */}
+                    {/* we also want that when we are loading all the data present on the page should get erased so !this.state.loading as when the data is being fetched the loading=true and at that time we want no data on the page so we will use the && as if the first cond'n is false the next statement (.map) will not get evaluate */}
                     {!this.state.loading && this.state.articles.map((element) => {
                         //in this method we have to give the specific distinction to every newsitem for which we will return the distinction inside the arrow function inside the .map
                         return <div className="col-md-4 my-3" key={element.url} >
                             {/* so that each newsitem is of the same size we will use the slice method inside the title and description */}
                             <Newsitems title={element.title ? element.title.slice(0, 45) : ""} description={element.description ? element.description.slice(0, 88) : ""} imageurl={element.urlToImage ? element.urlToImage : "https://th.bing.com/th/id/OIP.AyFiPMxkptU0wUk9QbHijwHaEK?w=309&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7"} url={element.url} />
                         </div>
-                    })}
+                    })} 
                 </div>
                 {/* here we are adding the next and the previous button so that we can move to the next or the previous page of the website */}
                 <div className="container d-flex justify-content-between" >
@@ -87,6 +99,7 @@ export class News extends Component {
                         disabled={this.state.page + 1 > Math.ceil(this.state.totalarticle / this.props.pageSize)} className="btn btn-secondary">Next &rarr;</button>
 
                 </div>
+        
             </div>
         )
     }
