@@ -32,6 +32,8 @@ export class News extends Component {
     //To disable the next button when the news articles get over we will use the pagesize(it is the amount of the article we want to put on a page) using the pagesize and the totalresult we will calculate the no. of pages we can have thus disable the next button when that no. get exceed
 
     //now to update the newsitem on its own we use componentdidmount here we are fetching the data from the news api directly and using it in the componentdidmount  
+
+    
     async componentDidMount() {
         let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=f21e7a9f6a6849679adaef56fc4be6df&page=1&pageSize=${this.props.pageSize}`
         this.setState({ loading: true })//here as the we are fetching the data from the apip so for the moment 
@@ -44,8 +46,6 @@ export class News extends Component {
     }
 
     handlenext = async () => {
-
-
         let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=f21e7a9f6a6849679adaef56fc4be6df&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`
         this.setState({ loading: true })//here as the we are fetching the data from the apip so for the moment the loading is true
         let data = await fetch(url)
@@ -55,7 +55,6 @@ export class News extends Component {
             articles: parsedata.articles,
             loading: false//as we have fetched the data from the api so now we don't need loading  anymore 
         })
-
     }
 
     handleprev = async () => {
@@ -86,7 +85,7 @@ export class News extends Component {
                         //in this method we have to give the specific distinction to every newsitem for which we will return the distinction inside the arrow function inside the .map
                         return <div className="col-md-4 my-3" key={element.url} >
                             {/* so that each newsitem is of the same size we will use the slice method inside the title and description */}
-                            <Newsitems title={element.title ? element.title.slice(0, 45) : ""} description={element.description ? element.description.slice(0, 70) : ""} imageurl={element.urlToImage ? element.urlToImage : "https://th.bing.com/th/id/OIP.AyFiPMxkptU0wUk9QbHijwHaEK?w=309&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7"} url={element.url} author={element.author} date={element.publishedAt} source={element.source.name} />
+                            <Newsitems title={element.title ? element.title.slice(0, 35) : ""} description={element.description ? element.description.slice(0, 30) : ""} imageurl={element.urlToImage ? element.urlToImage : "https://th.bing.com/th/id/OIP.AyFiPMxkptU0wUk9QbHijwHaEK?w=309&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7"} url={element.url} author={element.author} date={element.publishedAt} source={element.source.name} />
                         </div>
                     })} 
                 </div>
