@@ -43,7 +43,7 @@ export class News extends Component {
 
     async componentDidMount() {
         this.props.setprogress(0)
-        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=f21e7a9f6a6849679adaef56fc4be6df&page=1&pageSize=${this.props.pageSize}`
+        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apikey}&page=1&pageSize=${this.props.pageSize}`
         this.setState({ loading: true })//here as the we are fetching the data from the apip so for the moment 
         this.props.setprogress(30)
         let data = await fetch(url)
@@ -58,37 +58,11 @@ export class News extends Component {
         this.props.setprogress(100)
     }
 
-    // this is the logic of the next button
-    // handlenext = async () => {
-    //     let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=f21e7a9f6a6849679adaef56fc4be6df&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`
-    //     this.setState({ loading: true })//here as the we are fetching the data from the apip so for the moment the loading is true
-    //     let data = await fetch(url)
-    //     let parsedata = await data.json()
-    //     this.setState({
-    //         page: this.state.page + 1,//here we are updating the page no. by incrementing it when the next button is pressed
-    //         articles: parsedata.articles,
-    //         loading: false//as we have fetched the data from the api so now we don't need loading  anymore 
-    //     })
-    // }
-
-    // this is the logic of the previous button
-    // handleprev = async () => {
-    //     console.log("previous")
-    //     let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=f21e7a9f6a6849679adaef56fc4be6df&page=${this.state.page - 1}&pageSize=${this.props.pageSize}`
-    //     this.setState({ loading: true })//here as the we are fetching the data from the apip so for the moment 
-    //     let data = await fetch(url)
-    //     let parsedata = await data.json()
-    //     this.setState({
-    //         page: this.state.page - 1,//here we are updating the page no. by incrementing it when the next button is pressed
-    //         articles: parsedata.articles,
-    //         loading: false
-    //     })
-    // }
-
-    // The below is the fertchmore funcion which will fetch the more data for the infinite scroll
+   
+    // The below is the fetchmore funcion which will fetch the more data for the infinite scroll
     fetchMoreData = async() => {
         // this.setState({page:this.state.page+1})
-        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=f21e7a9f6a6849679adaef56fc4be6df&page=${this.state.page+1}&pageSize=${this.props.pageSize}`
+        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apikey}&page=${this.state.page+1}&pageSize=${this.props.pageSize}`
         this.setState({ loading: true })//here as the we are fetching the data from the apip so for the moment 
         let data = await fetch(url)
         let parsedata = await data.json()
