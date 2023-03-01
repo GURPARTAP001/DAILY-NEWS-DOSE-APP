@@ -11,7 +11,9 @@ export class Newsitems extends Component {
                 {/* here we are using the card to display the various news inside the news components */}
 
                 <div className="card text-center" >
+                <a href={url} target='_blank' >
                     <img src={imageurl} style={{ height: '30vh' }} className="card-img-top" alt="..." />
+                </a>
                     <div className="card-body" style={{ height: '33vh' }}>
                         <h5 className="card-title">{title}...</h5>
                         {/* below is the tag that is present on the top of the newsitems */}

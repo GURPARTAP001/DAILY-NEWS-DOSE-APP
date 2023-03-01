@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import Newsitems from './Newsitems'
 import Loading from './Loading'
 import PropTypes from 'prop-types'
-import InfiniteScroll from 'react-infinite-scroll-component'
+import InfiniteScroll from 'react-infinite-scroll-component'//this is for the infinite scroll bar
 
 export class News extends Component {
     // these are the default props 
@@ -42,30 +42,34 @@ export class News extends Component {
 
 
     async componentDidMount() {
+        this.props.setprogress(0)
         let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=f21e7a9f6a6849679adaef56fc4be6df&page=1&pageSize=${this.props.pageSize}`
         this.setState({ loading: true })//here as the we are fetching the data from the apip so for the moment 
+        this.props.setprogress(30)
         let data = await fetch(url)
         let parsedata = await data.json()
+        this.props.setprogress(60)
         console.log(parsedata)
         this.setState({
             articles: parsedata.articles,
             totalResults: parsedata.totalResults,
             loading: false
         })
+        this.props.setprogress(100)
     }
 
     // this is the logic of the next button
-    handlenext = async () => {
-        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=f21e7a9f6a6849679adaef56fc4be6df&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`
-        this.setState({ loading: true })//here as the we are fetching the data from the apip so for the moment the loading is true
-        let data = await fetch(url)
-        let parsedata = await data.json()
-        this.setState({
-            page: this.state.page + 1,//here we are updating the page no. by incrementing it when the next button is pressed
-            articles: parsedata.articles,
-            loading: false//as we have fetched the data from the api so now we don't need loading  anymore 
-        })
-    }
+    // handlenext = async () => {
+    //     let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=f21e7a9f6a6849679adaef56fc4be6df&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`
+    //     this.setState({ loading: true })//here as the we are fetching the data from the apip so for the moment the loading is true
+    //     let data = await fetch(url)
+    //     let parsedata = await data.json()
+    //     this.setState({
+    //         page: this.state.page + 1,//here we are updating the page no. by incrementing it when the next button is pressed
+    //         articles: parsedata.articles,
+    //         loading: false//as we have fetched the data from the api so now we don't need loading  anymore 
+    //     })
+    // }
 
     // this is the logic of the previous button
     // handleprev = async () => {
@@ -92,6 +96,7 @@ export class News extends Component {
         this.setState({
             articles:this.state.articles.concat( parsedata.articles),
             loading:false,
+            // through the below line of code we are getting the no. of total results that we are getting from the api into the variable totalResults
             totalResults: parsedata.totalResults,
             // loading: false,we don't need loading here as the infinitescroll has its own loading component 
             page:this.state.page+1
@@ -111,6 +116,7 @@ export class News extends Component {
                 <InfiniteScroll
                     dataLength={this.state.articles.length}
                     next={this.fetchMoreData}
+                    // the hasMore will get false when the articles.length is == to the totalResults
                     hasMore={this.state.articles.length!==this.state.totalResults}
                     // as our loading component is the Loading so we will use the Loading component
                     loader={<Loading/>} 
