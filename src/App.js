@@ -9,6 +9,8 @@ import{
   BrowserRouter as Router ,Route,Routes}from "react-router-dom"
 
 export default class App extends Component {
+  apikey=process.env.REACT_APP_NEWS_API//through this we are hiding the api key as we have created a envirnment variable
+  
   state={
     progress:0
     
@@ -31,9 +33,9 @@ export default class App extends Component {
           <Routes>
         {/* we don't want to hardcore the varios characterstics of the news eg:page size,country,category so we are passing it in the form of the props */}
         {/* now in order to re-render/remount the page when we press the category we have to pass the keys so that the react understand that its has to render the page again to see the difference remove the key and see */}
-        <Route exact path="/*" element={<News setprogress={this.setprogress} apikey={this.apikey}key="general" pageSize={12} country='in' category='general'/>}/>
-        <Route exact path="/business" element={<News setprogress={this.setprogress} apikey={this.apikey}key="business" pageSize={12} country='in' category='business'/>}/>
-        <Route exact path="/entertainment" element={<News setprogress={this.setprogress} apikey={this.apikey}key="entertainment" pageSize={12} country='in' category='entertainment'/>}/>
+        <Route exact path="/*" element={<News setprogress={this.setprogress} apikey={this.apikey} key="general" pageSize={12} country='in' category='general'/>}/>
+        <Route exact path="/business" element={<News setprogress={this.setprogress} apikey={this.apikey} key="business" pageSize={12} country='in' category='business'/>}/>
+        <Route exact path="/entertainment" element={<News setprogress={this.setprogress} apikey={this.apikey} key="entertainment" pageSize={12} country='in' category='entertainment'/>}/>
         <Route exact path="/health" element={<News setprogress={this.setprogress} apikey={this.apikey}key="health" pageSize={12} country='in' category='health'/>}/>
         <Route exact path="/science" element={<News setprogress={this.setprogress} apikey={this.apikey}key="science" pageSize={12} country='in' category='science'/>}/>
         <Route exact path="/sports" element={<News setprogress={this.setprogress} apikey={this.apikey}key="sports" pageSize={12} country='in' category='sports'/>}/>

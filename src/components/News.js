@@ -42,20 +42,20 @@ export class News extends Component {
 
 
     async componentDidMount() {
-        this.props.setprogress(0)
+        this.props.setprogress(0)//updating the progress
         let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apikey}&page=1&pageSize=${this.props.pageSize}`
         this.setState({ loading: true })//here as the we are fetching the data from the apip so for the moment 
-        this.props.setprogress(30)
+        this.props.setprogress(30)//updating the progress
         let data = await fetch(url)
         let parsedata = await data.json()
-        this.props.setprogress(60)
+        this.props.setprogress(60)//updating the progress
         console.log(parsedata)
         this.setState({
             articles: parsedata.articles,
             totalResults: parsedata.totalResults,
             loading: false
         })
-        this.props.setprogress(100)
+        this.props.setprogress(100)//updating the progress
     }
 
    
@@ -107,23 +107,14 @@ export class News extends Component {
                         //in this method we have to give the specific distinction to every newsitem for which we will return the distinction inside the arrow function inside the .map
                         return <div className="col-md-4 my-3" key={element.url} >
                             {/* so that each newsitem is of the same size we will use the slice method inside the title and description */}
-                            <Newsitems title={element.title ? element.title.slice(0, 35) : ""} description={element.description ? element.description.slice(0, 30) : ""} imageurl={element.urlToImage ? element.urlToImage : "https://th.bing.com/th/id/OIP.AyFiPMxkptU0wUk9QbHijwHaEK?w=309&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7"} url={element.url} author={element.author} date={element.publishedAt} source={element.source.name} />
+                            <Newsitems title={element.title ? element.title.slice(0, 35) : ""} description={element.description ? element.description.slice(0, 30) : ""} imageurl={element.urlToImage?element.urlToImage: "https://th.bing.com/th/id/OIP.AyFiPMxkptU0wUk9QbHijwHaEK?w=309&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7"} url={element.url} author={element.author} date={element.publishedAt} source={element.source.name} />
                         </div>
                     })}
                     </div>
                 </div>
                     </InfiniteScroll>
 
-                {/* here we are adding the next and the previous button so that we can move to the next or the previous page of the website */}
-                {/* <div className="container d-flex justify-content-between" > */}
-                    {/* we are disabling the previous button if the page no. is less then the 1 */}
-                    {/* <button disabled={this.state.page <= 1} type="button" onClick={this.handleprev} className="btn btn-dark">Previous &larr;</button>
-                    <button type="button"
-                        onClick={this.handlenext}
-                        disabled={this.state.page + 1 > Math.ceil(this.state.totalarticle / this.props.pageSize)} className="btn btn-dark">Next &rarr;</button>
-                </div> */}
-
-                {/* we have disabled the next and the previous buttons because we are using the infinite scroll  */}
+                
 
             </>
         )
