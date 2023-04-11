@@ -58,25 +58,25 @@ export class News extends Component {
         this.props.setprogress(100)//updating the progress
     }
 
-   
+
     // The below is the fetchmore funcion which will fetch the more data for the infinite scroll
-    fetchMoreData = async() => {
+    fetchMoreData = async () => {
         // this.setState({page:this.state.page+1})
-        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apikey}&page=${this.state.page+1}&pageSize=${this.props.pageSize}`
+        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apikey}&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`
         this.setState({ loading: true })//here as the we are fetching the data from the apip so for the moment 
         let data = await fetch(url)
         let parsedata = await data.json()
         console.log(parsedata)
         this.setState({
-            articles:this.state.articles.concat( parsedata.articles),
-            loading:false,
+            articles: this.state.articles.concat(parsedata.articles),
+            loading: false,
             // through the below line of code we are getting the no. of total results that we are getting from the api into the variable totalResults
             totalResults: parsedata.totalResults,
             // loading: false,we don't need loading here as the infinitescroll has its own loading component 
-            page:this.state.page+1
+            page: this.state.page + 1
         })
-       
-      };
+
+    };
 
     render() {
         return (
@@ -91,30 +91,30 @@ export class News extends Component {
                     dataLength={this.state.articles.length}
                     next={this.fetchMoreData}
                     // the hasMore will get false when the articles.length is == to the totalResults
-                    hasMore={this.state.articles.length!==this.state.totalResults}
+                    hasMore={this.state.articles.length !== this.state.totalResults}
                     // as our loading component is the Loading so we will use the Loading component
-                    loader={<Loading/>} 
+                    loader={<Loading />}
                 >
                     {/* To disable the the scroll bar that we are getting at the end of the page we will enclose the classname=row inside the other div with the classNamae container */}
                     <div className="container">
-                        
-                <div className="row">
-                    {/* now we want to alterate the newsitems with the different news so we will use the 
-                    this.state.map(()=>{}) here the map is the ioorder method it takes the arrow function in it*/}
-                    {/* we also want that when we are loading all the data present on the page should get erased so !this.state.loading as when the data is being fetched the loading=true and at that time we want no data on the page so we will use the && as if the first cond'n is false the next statement (.map) will not get evaluate */}
-                    {/* {!this.state.loading && this.state.articles.map((element) => { we are removing this line because of the infinite scroll*/}
-                    { this.state.articles.map((element) => {
-                        //in this method we have to give the specific distinction to every newsitem for which we will return the distinction inside the arrow function inside the .map
-                        return <div className="col-md-4 my-3" key={element.url} >
-                            {/* so that each newsitem is of the same size we will use the slice method inside the title and description */}
-                            <Newsitems title={element.title ? element.title.slice(0, 35) : ""} description={element.description ? element.description.slice(0, 30) : ""} imageurl={element.urlToImage?element.urlToImage: "https://th.bing.com/th/id/OIP.AyFiPMxkptU0wUk9QbHijwHaEK?w=309&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7"} url={element.url} author={element.author} date={element.publishedAt} source={element.source.name} />
-                        </div>
-                    })}
-                    </div>
-                </div>
-                    </InfiniteScroll>
 
-                
+                        <div className="row">
+                            {/* now we want to alterate the newsitems with the different news so we will use the 
+                    this.state.map(()=>{}) here the map is the ioorder method it takes the arrow function in it*/}
+                            {/* we also want that when we are loading all the data present on the page should get erased so !this.state.loading as when the data is being fetched the loading=true and at that time we want no data on the page so we will use the && as if the first cond'n is false the next statement (.map) will not get evaluate */}
+                            {/* {!this.state.loading && this.state.articles.map((element) => { we are removing this line because of the infinite scroll*/}
+                            {this.state.articles.map((element) => {
+                                //in this method we have to give the specific distinction to every newsitem for which we will return the distinction inside the arrow function inside the .map
+                                return <div className="col-md-4 my-3" key={element.url} >
+                                    {/* so that each newsitem is of the same size we will use the slice method inside the title and description */}
+                                    <Newsitems title={element.title ? element.title.slice(0, 35) : ""} description={element.description ? element.description.slice(0, 30) : ""} imageurl={element.urlToImage ? element.urlToImage : "https://th.bing.com/th/id/OIP.AyFiPMxkptU0wUk9QbHijwHaEK?w=309&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7"} url={element.url} author={element.author} date={element.publishedAt} source={element.source.name} />
+                                </div>
+                            })}
+                        </div>
+                    </div>
+                </InfiniteScroll>
+
+
 
             </>
         )
