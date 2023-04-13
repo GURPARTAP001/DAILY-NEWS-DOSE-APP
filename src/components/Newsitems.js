@@ -1,11 +1,16 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-export class Newsitems extends Component {
 
+// to convert the class base components to the function base component use props instead of this.props 
+// also remove the ,{Component} from the " from 'react' "
+// also remove the render()
+// export class Newsitems extends Component {
 
-    render() {
-        let { title, description, imageurl, url, author, date, source } = this.props
+const Newsitems=(props)=>{
+
+    
+        let { title, description, imageurl, url, author, date, source } = props
         return (
             <div >
                 {/* here we are using the card to display the various news inside the news components */}
@@ -28,6 +33,6 @@ export class Newsitems extends Component {
             </div>
         )
     }
-}
+
 
 export default Newsitems

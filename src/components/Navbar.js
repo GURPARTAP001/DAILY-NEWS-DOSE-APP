@@ -1,19 +1,16 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import {
-   Link
-} from "react-router-dom"
+import React from 'react'
+import { Link} from "react-router-dom"
 
 
-export class Navbar extends Component {
-  static propTypes = {
+// converting the class base components to the function base components
+// export class Navbar extends Component {
+  const Navbar=()=>{
+  
 
-  }
-
-  render() {
+ 
     return (
-      <div>
-       <nav className="navbar navbar-expand-lg bg-body-tertiary">
+      <div >
+       <nav className="navbar fixed-top navbar-expand-lg bg-body-tertiary">
   <div className="container-fluid">
     <Link className="navbar-brand" to="/">News-Monkey</Link>
     {/* below is the button which show the navigtion tags when the screen size decrease */}
@@ -52,6 +49,6 @@ export class Navbar extends Component {
       </div>
     )
   }
-}
+
 
 export default Navbar

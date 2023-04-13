@@ -1,8 +1,11 @@
-import React, { Component } from 'react'
+import React from 'react'
 import spinner from './spinner.gif'
 
-export class loading extends Component {
-  render() {
+// converting the class base component to the function base component
+// export class loading extends Component {
+  const loading=()=>{
+
+  
     return (
       <div className='text-center my-3'>
         {/* we have to enclose the src in the {} as it is hte the component */}
@@ -10,6 +13,6 @@ export class loading extends Component {
       </div>
     )
   }
-}
+
 
 export default loading
